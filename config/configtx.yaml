@@ -1,0 +1,205 @@
+Organizations:
+
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: ../crypto-material/ordererOrganizations/pca.com/msp
+        Policies:
+            Readers: 
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Writers: 
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Admins: 
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+        OrdererEndpoints:
+            - orderer0.pca.com:7050
+
+
+    - &Hospital
+        Name: Hospital
+        ID: HospitalMSP
+        MSPDir: ../crypto-material/peerOrganizations/hospital.pca.com/msp
+        Policies:
+            Readers: 
+                Type: Signature
+                Rule: "OR('HospitalMSP.member')"
+            Writers: 
+                Type: Signature
+                Rule: "OR('HospitalMSP.member')"
+            Admins: 
+                Type: Signature
+                Rule: "OR('HospitalMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('HospitalMSP.member')"
+        AnchorPeers:
+            - Host: peer0.hospital.pca.com
+              Port: 7051
+
+    - &Chemist
+        Name: Chemist
+        ID: ChemistMSP
+        MSPDir: ../crypto-material/peerOrganizations/chemist.pca.com/msp
+        Policies:
+            Readers: 
+                Type: Signature
+                Rule: "OR('ChemistMSP.member')"
+            Writers: 
+                Type: Signature
+                Rule: "OR('ChemistMSP.member')"
+            Admins: 
+                Type: Signature
+                Rule: "OR('ChemistMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('ChemistMSP.member')"
+        AnchorPeers:
+            - Host: peer0.chemist.pca.com
+              Port: 7052
+    
+    - &Pathology
+        Name: Pathology
+        ID: PathologyMSP
+        MSPDir: ../crypto-material/peerOrganizations/pathology.pca.com/msp
+        Policies:
+            Readers: 
+                Type: Signature
+                Rule: "OR('PathologyMSP.member')"
+            Writers: 
+                Type: Signature
+                Rule: "OR('PathologyMSP.member')"
+            Admins: 
+                Type: Signature
+                Rule: "OR('PathologyMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('PathologyMSP.member')"
+        AnchorPeers:
+            - Host: peer0.pathology.pca.com
+              Port: 7053
+
+    - &Insurance
+        Name: Insurance
+        ID: InsuranceMSP
+        MSPDir: ../crypto-material/peerOrganizations/insurance.pca.com/msp
+        Policies:
+            Readers: 
+                Type: Signature
+                Rule: "OR('InsuranceMSP.member')"
+            Writers: 
+                Type: Signature
+                Rule: "OR('InsuranceMSP.member')"
+            Admins: 
+                Type: Signature
+                Rule: "OR('InsuranceMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('InsuranceMSP.member')"
+        AnchorPeers:
+            - Host: peer0.insurance.pca.com
+              Port: 7054
+
+Capabilities:
+    Channel: &ChannelCapabilities
+        V2_0: true
+    Orderer: &OrdererCapabilities
+        V2_0: true
+    Application: &ApplicationCapabilities
+        V2_0: true
+
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Admins: 
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+    Capabilities:
+        <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+    OrdererType: etcdraft
+    Addresses:
+        - orderer0.pca.com:7050
+    EtcdRaft:
+        Consenters: 
+        - Host: orderer0.pca.com
+          Port: 7050
+          ClientTLSCert: ../crypto-material/ordererOrganizations/pca.com/orderers/orderer0.pca.com/tls/server.crt
+          ServerTLSCert: ../crypto-material/ordererOrganizations/pca.com/orderers/orderer0.pca.com/tls/server.crt
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Admins: 
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Admins: 
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Profiles:
+    PcaNetworkProfile:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations: 
+                - *OrdererOrg
+            Capabilities: 
+                <<: *OrdererCapabilities
+        Consortiums:
+            PcaConsortium:
+                Organizations:
+                    - *Hospital
+                    - *Insurance
+                    - *Chemist
+                    - *Pathology
+    PcaChannelProfile:
+        Consortium: PcaConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Hospital
+                - *Insurance
+                - *Pathology
+                - *Chemist
+        
+

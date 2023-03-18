@@ -1,0 +1,7 @@
+PeerOrgs:
+    - Name: Chemist
+      Domain: chemist.pca.com
+      Template: 
+        Count: 1
+        SANS: 
+          - localhost

@@ -1,0 +1,7 @@
+PeerOrgs:
+    - Name: Pathology
+      Domain: pathology.pca.com
+      Template: 
+        Count: 1
+        SANS: 
+          - localhost

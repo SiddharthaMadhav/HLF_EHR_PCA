@@ -1,0 +1,7 @@
+PeerOrgs:
+    - Name: Insurance
+      Domain: insurance.pca.com
+      Template: 
+        Count: 1
+        SANS: 
+          - localhost

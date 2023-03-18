@@ -1,0 +1,7 @@
+PeerOrgs:
+    - Name: Hospital
+      Domain: hospital.pca.com
+      Template: 
+        Count: 1
+        SANS: 
+          - localhost

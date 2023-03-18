@@ -1,0 +1,33 @@
+version: "3"
+
+volumes:
+  peer0.chemist.pca.com:
+
+networks:
+  pcanet:
+
+services:
+  peer0.chemist.pca.com:
+    networks:
+      - pcanet
+    container_name: peer0.chemist.pca.com
+    image: hyperledger/fabric-peer:latest
+    volumes:
+      - ../crypto-material/peerOrganizations/chemist.pca.com/peers/peer0.chemist.pca.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-material/peerOrganizations/chemist.pca.com/peers/peer0.chemist.pca.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.chemist.pca.com:/var/hyperledger/production
+    environment:
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt 
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key 
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt 
+      - CORE_PEER_ID=peer0.chemist.pca.com
+      - CORE_PEER_ADDRESS=peer0.chemist.pca.com:7052
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.insurance.pca.com:7052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.insurance.pca.com:7052
+      - CORE_PEER_LOCALMSPID=ChemistMSP
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 7052:7052
