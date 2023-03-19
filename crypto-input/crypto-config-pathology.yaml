@@ -1,7 +1,11 @@
 PeerOrgs:
     - Name: Pathology
       Domain: pathology.pca.com
+      EnableNodeOUs: true 
+
       Template: 
         Count: 1
         SANS: 
           - localhost
+      Users:
+        Count: 1

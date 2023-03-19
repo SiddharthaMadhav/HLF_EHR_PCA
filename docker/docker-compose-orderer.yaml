@@ -1,20 +1,20 @@
 version: "3"
 
 volumes:
-  orderer0.pca.com:
+  orderer.pca.com:
 
 networks:
   pcanet:
 
 services:
-  orderer0.pca.com:
-    container_name: orderer0.pca.com
+  orderer.pca.com:
+    container_name: orderer.pca.com
     image: hyperledger/fabric-orderer:latest
     volumes:
       - ../system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ../crypto-material/ordererOrganizations/pca.com/orderers/orderer0.pca.com/msp:/var/hyperledger/orderer/msp
-      - ../crypto-material/ordererOrganizations/pca.com/orderers/orderer0.pca.com/tls/:/var/hyperledger/orderer/tls
-      - orderer0.pca.com:/var/hyperledger/production/orderer
+      - ../crypto-material/ordererOrganizations/pca.com/orderers/orderer.pca.com/msp:/var/hyperledger/orderer/msp
+      - ../crypto-material/ordererOrganizations/pca.com/orderers/orderer.pca.com/tls/:/var/hyperledger/orderer/tls
+      - orderer.pca.com:/var/hyperledger/production/orderer
     environment:
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_LISTENPORT=7050

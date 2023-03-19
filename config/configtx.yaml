@@ -139,8 +139,8 @@ Orderer: &OrdererDefaults
         Consenters: 
         - Host: orderer0.pca.com
           Port: 7050
-          ClientTLSCert: ../crypto-material/ordererOrganizations/pca.com/orderers/orderer0.pca.com/tls/server.crt
-          ServerTLSCert: ../crypto-material/ordererOrganizations/pca.com/orderers/orderer0.pca.com/tls/server.crt
+          ClientTLSCert: ../crypto-material/ordererOrganizations/pca.com/orderers/orderer.pca.com/tls/server.crt
+          ServerTLSCert: ../crypto-material/ordererOrganizations/pca.com/orderers/orderer.pca.com/tls/server.crt
     BatchTimeout: 2s
     BatchSize:
         MaxMessageCount: 10
@@ -185,21 +185,50 @@ Profiles:
             Capabilities: 
                 <<: *OrdererCapabilities
         Consortiums:
-            PcaConsortium:
+            PcaConsortium1:
                 Organizations:
                     - *Hospital
                     - *Insurance
-                    - *Chemist
+            PcaConsortium2:
+                Organizations:
+                    - *Hospital
                     - *Pathology
-    PcaChannelProfile:
-        Consortium: PcaConsortium
+            PcaConsortium3:
+                Organizations:
+                    - *Hospital
+                    - *Chemist
+
+    PcaChannelProfile1:
+        Consortium: PcaConsortium1
         <<: *ChannelDefaults
         Application:
             <<: *ApplicationDefaults
             Organizations:
                 - *Hospital
                 - *Insurance
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    PcaChannelProfile2:
+        Consortium: PcaConsortium2
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Hospital
                 - *Pathology
+            Capabilities:
+                <<: *ApplicationCapabilities
+                
+    PcaChannelProfile3:
+        Consortium: PcaConsortium3
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Hospital
                 - *Chemist
+            Capabilities:
+                <<: *ApplicationCapabilities
         
 

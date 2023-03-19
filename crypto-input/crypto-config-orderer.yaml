@@ -1,7 +1,8 @@
 OrdererOrgs:
   - Name: Orderer
     Domain: pca.com
-    Template:
-      Count: 1
-      SANS:
-      - localhost
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: orderer
+        SANS:
+          - localhost

@@ -22,12 +22,12 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key 
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt 
       - CORE_PEER_ID=peer0.chemist.pca.com
-      - CORE_PEER_ADDRESS=peer0.chemist.pca.com:7052
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.insurance.pca.com:7052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.insurance.pca.com:7052
+      - CORE_PEER_ADDRESS=peer0.chemist.pca.com:8050
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8050
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.insurance.pca.com:8050
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.insurance.pca.com:8050
       - CORE_PEER_LOCALMSPID=ChemistMSP
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
-      - 7052:7052
+      - 8050:8050
