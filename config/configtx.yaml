@@ -58,7 +58,7 @@ Organizations:
                 Rule: "OR('ChemistMSP.member')"
         AnchorPeers:
             - Host: peer0.chemist.pca.com
-              Port: 7052
+              Port: 8050
     
     - &Pathology
         Name: Pathology
