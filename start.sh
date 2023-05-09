@@ -64,7 +64,7 @@ peer channel update -o localhost:7050 --ordererTLSHostnameOverride orderer.pca.c
 printSeparator "Create Channel 3 Transaction"
 configtxgen -profile PcaChannelProfile3 -configPath ${PWD}/config -outputCreateChannelTx ./channel-artifacts/pcaChannel3.tx -channelID channel3 && sleep 3
 printSeparator "Create Anchor Peers Update for Hospital"
-configtxgen -profile PcaChannelProfile3 -configPath ${PWD}/config -outputAnchorPeersUpdate ./channel-artifacts/HospitalMSPAnchors.tx -channelID channel3 -asOrg Hospital
+configtxgen -profile PcaChannelProfile3 -configPath ${PWD}/config -outputAnchorPeersUpdate ./channel-artifacts/HospitalMSPanchors3.tx -channelID channel3 -asOrg Hospital
 printSeparator "Create Anchor Peers Update for Insurance"
 configtxgen -profile PcaChannelProfile3 -configPath ${PWD}/config -outputAnchorPeersUpdate ./channel-artifacts/ChemistMSPanchors3.tx -channelID channel3 -asOrg Chemist
 printSeparator "Wait 3 seconds for network to come up" && sleep 3
